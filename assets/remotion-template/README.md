@@ -1,19 +1,30 @@
-# Remotion 示例工程
+# Remotion 默认母模板
 
-该工程演示分镜素材画面风格模板3.0的三个场景引擎。示例图片位于 `public/storyboard-template-v3-assets/`，正式制作时应替换为与台词一致且已获授权的高清素材。
+该工程演示“城市居住观察｜纪实编辑感”默认分镜模板。核心源码是 `src/StoryboardTemplateV2.tsx`，包含公共排版常量、基础组件和五段示例 Composition。
 
-依赖不会随 Skill 打包。先让目标环境中的 Codex 读取 [DEPENDENCIES.md](DEPENDENCIES.md)，检查环境并执行 `npm install`。
+示例图片位于 `public/sample-assets/`，只用于验证模板可以运行。正式制作必须替换为与当期台词一致、来源清楚且可用的高清素材。
+
+仓库不附带本地依赖与字体文件。先让目标环境中的 Codex 读取 [DEPENDENCIES.md](DEPENDENCIES.md)，再执行：
 
 ```bash
+npm install
+npm run compositions
 npm run studio
 ```
 
-也可以分别执行：
+渲染完整示例：
 
 ```bash
-npm run render:focus
-npm run render:rail
-npm run render:split
+npm run render
 ```
 
-工程不附带本地字体文件。若项目需要固定字体，请让目标环境中的 Codex 获取已授权字体，放入项目素材目录并在组件中通过 `staticFile()` 与 `@font-face` 注册。
+渲染单张检查图：
+
+```bash
+npm run still
+```
+
+可识别的 Composition：
+
+- `StoryboardTemplate-Showcase`
+- `StoryboardTemplate-01` 至 `StoryboardTemplate-05`

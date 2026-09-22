@@ -52,4 +52,4 @@ PingFang SC, Microsoft YaHei, Noto Sans CJK SC, sans-serif
 npm run compositions
 ```
 
-确认三个 Composition 均可识别，再启动 Studio 或渲染。
+确认完整示例和五个分段 Composition 均可识别，再启动 Studio 或渲染。

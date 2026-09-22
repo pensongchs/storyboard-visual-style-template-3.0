@@ -1,39 +1,22 @@
 import {Composition} from 'remotion';
 import {
-  StoryboardStyleV3FocusWindow,
-  storyboardStyleV3FocusWindowDuration,
-} from './FocusWindow';
-import {
-  StoryboardStyleV3EvidenceRail,
-  StoryboardStyleV3SemanticSplit,
-  storyboardStyleV3VariantDuration,
-} from './StyleVariants';
+  StoryboardTemplateV2Scene1,
+  StoryboardTemplateV2Scene2,
+  StoryboardTemplateV2Scene3,
+  StoryboardTemplateV2Scene4,
+  StoryboardTemplateV2Scene5,
+  StoryboardTemplateV2Showcase,
+  storyboardTemplateV2Durations,
+  storyboardTemplateV2ShowcaseDuration,
+} from './StoryboardTemplateV2';
 
 export const Root = () => (
   <>
-    <Composition
-      id="StoryboardStyleV3-FocusWindow"
-      component={StoryboardStyleV3FocusWindow}
-      durationInFrames={storyboardStyleV3FocusWindowDuration}
-      fps={30}
-      width={1280}
-      height={720}
-    />
-    <Composition
-      id="StoryboardStyleV3-EvidenceRail"
-      component={StoryboardStyleV3EvidenceRail}
-      durationInFrames={storyboardStyleV3VariantDuration}
-      fps={30}
-      width={1280}
-      height={720}
-    />
-    <Composition
-      id="StoryboardStyleV3-SemanticSplit"
-      component={StoryboardStyleV3SemanticSplit}
-      durationInFrames={storyboardStyleV3VariantDuration}
-      fps={30}
-      width={1280}
-      height={720}
-    />
+    <Composition id="StoryboardTemplate-Showcase" component={StoryboardTemplateV2Showcase} durationInFrames={storyboardTemplateV2ShowcaseDuration} fps={30} width={1280} height={720} />
+    <Composition id="StoryboardTemplate-01" component={StoryboardTemplateV2Scene1} durationInFrames={storyboardTemplateV2Durations.one} fps={30} width={1280} height={720} />
+    <Composition id="StoryboardTemplate-02" component={StoryboardTemplateV2Scene2} durationInFrames={storyboardTemplateV2Durations.two} fps={30} width={1280} height={720} />
+    <Composition id="StoryboardTemplate-03" component={StoryboardTemplateV2Scene3} durationInFrames={storyboardTemplateV2Durations.three} fps={30} width={1280} height={720} />
+    <Composition id="StoryboardTemplate-04" component={StoryboardTemplateV2Scene4} durationInFrames={storyboardTemplateV2Durations.four} fps={30} width={1280} height={720} />
+    <Composition id="StoryboardTemplate-05" component={StoryboardTemplateV2Scene5} durationInFrames={storyboardTemplateV2Durations.five} fps={30} width={1280} height={720} />
   </>
 );

@@ -5,9 +5,8 @@
   "scripts": {
     "studio": "remotion studio",
     "compositions": "remotion compositions src/index.ts",
-    "render:focus": "remotion render src/index.ts StoryboardStyleV3-FocusWindow renders/focus-window.mp4 --codec=h264",
-    "render:rail": "remotion render src/index.ts StoryboardStyleV3-EvidenceRail renders/evidence-rail.mp4 --codec=h264",
-    "render:split": "remotion render src/index.ts StoryboardStyleV3-SemanticSplit renders/semantic-split.mp4 --codec=h264"
+    "render": "remotion render src/index.ts StoryboardTemplate-Showcase renders/storyboard-template-showcase.mp4 --codec=h264",
+    "still": "remotion still src/index.ts StoryboardTemplate-03 renders/storyboard-template-still.png --frame=100"
   },
   "dependencies": {
     "@remotion/cli": "4.0.484",
