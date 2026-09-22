@@ -1,0 +1,23 @@
+{
+  "name": "storyboard-visual-style-template-3-0",
+  "version": "3.0.0",
+  "private": true,
+  "scripts": {
+    "studio": "remotion studio",
+    "compositions": "remotion compositions src/index.ts",
+    "render:focus": "remotion render src/index.ts StoryboardStyleV3-FocusWindow renders/focus-window.mp4 --codec=h264",
+    "render:rail": "remotion render src/index.ts StoryboardStyleV3-EvidenceRail renders/evidence-rail.mp4 --codec=h264",
+    "render:split": "remotion render src/index.ts StoryboardStyleV3-SemanticSplit renders/semantic-split.mp4 --codec=h264"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.484",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "remotion": "4.0.484",
+    "typescript": "6.0.3"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3"
+  }
+}

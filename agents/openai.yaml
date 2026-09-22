@@ -1,0 +1,4 @@
+interface:
+  display_name: "分镜素材画面风格模板3.0"
+  short_description: "房产口播分镜的三种场景化MG画面模板与本地动效素材库"
+  default_prompt: "使用 $storyboard-visual-style-template-3-0 为这段房产口播设计并制作分镜画面。"

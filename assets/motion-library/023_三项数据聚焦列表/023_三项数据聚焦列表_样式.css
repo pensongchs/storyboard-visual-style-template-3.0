@@ -1,0 +1,76 @@
+/* From Uiverse.io by mohanad_2899 */
+.cards {
+  height: auto;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+  transition: all 200ms ease-in-out;
+}
+
+.card-container {
+  --font-color: hsl(0, 0%, 15%);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  transition: all 200ms ease-in-out;
+}
+
+.card-container {
+  position: relative;
+  width: 250px;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5em 1em;
+  border-radius: 0.5em;
+  cursor: pointer;
+}
+
+.card-container .icon-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.card-container .icon-container svg {
+  width: 30px;
+  height: 30px;
+}
+
+.card-container .icon-container p {
+  font-size: 0.9em;
+  font-weight: 400;
+}
+
+.card-container p {
+  font-weight: 600;
+}
+
+.twitter-card {
+  background-color: hsl(0, 0%, 0%);
+  color: hsl(0, 0%, 100%);
+}
+
+.facebook-card {
+  background-color: hsl(220, 100%, 60%);
+  color: hsl(0, 0%, 100%);
+}
+
+.instagram-card {
+  background-color: hsl(350, 100%, 60%);
+  color: hsl(0, 0%, 100%);
+}
+
+.card-container:hover {
+  transform: scale(1.1);
+  z-index: 1;
+}
+
+.cards:hover > .card-container:not(:hover) {
+  filter: blur(5px);
+}
