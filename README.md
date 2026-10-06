@@ -54,22 +54,33 @@ git clone https://github.com/pensongchs/storyboard-visual-style-template-3.0.git
 $storyboard-visual-style-template-3-0 按当前默认模板为这段房产口播制作分镜画面
 ```
 
+## 制作与直接交付
+
+默认由 Codex 在当前项目中制作、后台渲染并完成必要的成片检查，然后直接在对话中展示本地视频、文件链接和简要验证结果。无内嵌播放能力时提供文件链接。只有用户明确要求时才打开 Remotion Studio、外部浏览器或审片台。
+
 ## 运行 Remotion 示例
 
-仓库不携带 `node_modules`、本地字体、模型、运行时、缓存或构建产物。由目标环境中的 Codex 先读 `assets/remotion-template/DEPENDENCIES.md`，再安装依赖：
+优先复用当前项目已有工程。首次使用独立示例时，在当前项目根目录执行以下命令；目标目录已存在时直接复用，不重复复制：
 
 ```bash
-cd assets/remotion-template
-npm install
-npm run compositions
-npm run studio
+mkdir -p outputs
+cp -R "${CODEX_HOME:-$HOME/.codex}/skills/storyboard-visual-style-template-3-0/assets/remotion-template" outputs/分镜制作
+cd outputs/分镜制作
 ```
 
-渲染完整示例：
+仓库不携带本机依赖与字体。由目标环境中的 Codex 读取工作工程的 `DEPENDENCIES.md`，按项目依赖管理规则准备依赖；普通独立工程可执行：
 
 ```bash
+npm install
+npx remotion browser ensure
+npm run compositions
+npm run still
 npm run render
 ```
+
+示例成片保存在工作工程的 `renders/storyboard-template-showcase.mp4`。`npm run studio` 仅用于用户明确要求的交互预览，不是渲染前置步骤。
+
+如果 Chromium 被 Codex 沙箱明确阻止，Codex 应通过执行工具申请仅对所需命令授权，在原工作目录重跑并继续完成交付。浏览器下载、目录写入和启动权限应分别诊断；`browser ensure` 不负责解除沙箱限制。具体处理见 [依赖与运行权限说明](assets/remotion-template/DEPENDENCIES.md)。
 
 ## 授权提醒
 
