@@ -1,10 +1,16 @@
 # 分镜素材画面风格模板3.0
 
-这是“极限小滕”当前默认分镜母模板的 Codex Skill。画面采用“真实城市生活视频或写实图片 + 杂志式信息排版”：实景负责可信度，标题、卡片、数字、节点和关系线负责解释口播。
+这是“极限小滕”当前默认分镜母模板的 Codex Skill。调用后自动按字幕语义匹配动效库，统一材质与节奏，同时使用适合台词的不同解释结构。画面采用“真实城市生活视频或写实图片 + 杂志式信息排版”：实景负责可信度，标题、卡片、数字、节点和关系线负责解释口播。
 
 适用于房产口播插入画面、独立分镜视频和动态图文包装，不用于片头、开场、封面或真人出镜整片。
 
 ## 默认模板预览
+
+### 随台词变化的语义动效
+
+![选择聚焦、费用分层、数字关系、风险转折](assets/previews/05_语义动效_四类示例.jpg)
+
+四类示例共用模板的材质、色彩和节奏，分别按时间轴推进不同关系；文字、数字、素材和示例时间仅用于组件演示。正式制作按当期台词重新匹配，不固定套用这四镜。
 
 ### 排版与语义卡片基线
 
@@ -37,22 +43,35 @@
 
 - `SKILL.md`：Codex Skill 主入口。
 - `references/STORYBOARD_DESIGN.md`：当前默认模板的完整规则。
-- `assets/remotion-template/src/StoryboardTemplateV2.tsx`：默认母组件与五段示例。
+- `assets/remotion-template/src/StoryboardTemplateV2.tsx`：默认母组件与五段排版示例，基础卡片支持多种入场动作。
+- `assets/remotion-template/src/SemanticMotion.tsx`：独立实现的选择聚焦、费用分层、数字关系、风险反转组件。
+- `assets/remotion-template/src/SemanticMotionShowcase.tsx`：四种语义结构的可运行演示。
 - `assets/remotion-template/`：可直接安装依赖并运行的 Remotion 示例工程。
 - `assets/previews/`：默认模板基准图与真实成片联系表。
 - `assets/motion-library/`：23 项动效素材库原始文件、截图和登记说明。
 
 ## 安装 Skill
 
-```bash
-git clone https://github.com/pensongchs/storyboard-visual-style-template-3.0.git ~/.codex/skills/storyboard-visual-style-template-3-0
-```
-
-随后可使用：
+在 Codex 中发送：
 
 ```text
-$storyboard-visual-style-template-3-0 按当前默认模板为这段房产口播制作分镜画面
+$skill-installer
+从 https://github.com/pensongchs/storyboard-visual-style-template-3.0 安装此仓库根目录的 Skill。
 ```
+
+安装后选择 `storyboard-visual-style-template-3-0`；没有显示时重启 Codex。已安装的学员需要更新原 Skill 目录中的文件，GitHub 更新不会自动替换已下载的旧版本；不要另外安装同名副本。
+
+## 调用并提供本期输入
+
+```text
+$storyboard-visual-style-template-3-0
+请用我提供的最终文案、SRT 和 Caption JSON 制作分镜素材。
+制作范围：整份字幕（或填具体起止时间）。
+本地视频：未提供，按 Skill 默认素材模式。
+输出：独立 MP4。
+```
+
+拖入本期文件，或写清本机实际路径即可。没有时间码时提供音频；只有文案时先做规划。需要带配音的整条视频时明确说明。色彩、字号、构图、动效匹配和成片检查均由 Skill 负责，不需要复制长篇风格指令；特殊要求只说明本期确实不同的部分。短调用不代表单一动画，完整规则在 `SKILL.md` 与对应参考文件中。
 
 ## 制作与直接交付
 
@@ -60,13 +79,7 @@ $storyboard-visual-style-template-3-0 按当前默认模板为这段房产口播
 
 ## 运行 Remotion 示例
 
-优先复用当前项目已有工程。首次使用独立示例时，在当前项目根目录执行以下命令；目标目录已存在时直接复用，不重复复制：
-
-```bash
-mkdir -p outputs
-cp -R "${CODEX_HOME:-$HOME/.codex}/skills/storyboard-visual-style-template-3-0/assets/remotion-template" outputs/分镜制作
-cd outputs/分镜制作
-```
+优先复用当前项目已有工程。首次使用独立示例时，让 Codex 从已安装 Skill 的实际目录复制 `assets/remotion-template/` 到当前项目的 `outputs/分镜制作/`；已存在同一工程时直接复用。安装目录只用于读取，不在其中写成片或安装依赖。
 
 仓库不携带本机依赖与字体。由目标环境中的 Codex 读取工作工程的 `DEPENDENCIES.md`，按项目依赖管理规则准备依赖；普通独立工程可执行：
 
@@ -78,7 +91,7 @@ npm run still
 npm run render
 ```
 
-示例成片保存在工作工程的 `renders/storyboard-template-showcase.mp4`。`npm run studio` 仅用于用户明确要求的交互预览，不是渲染前置步骤。
+五段排版示例保存在工作工程的 `renders/storyboard-template-showcase.mp4`。四种语义动效示例可执行 `npm run render:semantic`，输出为 `renders/semantic-motion-showcase.mp4`。二者是组件使用演示，正式制作须替换台词、素材和字幕时间轴。`npm run studio` 仅用于用户明确要求的交互预览，不是渲染前置步骤。
 
 如果 Chromium 被 Codex 沙箱明确阻止，Codex 应通过执行工具申请仅对所需命令授权，在原工作目录重跑并继续完成交付。浏览器下载、目录写入和启动权限应分别诊断；`browser ensure` 不负责解除沙箱限制。具体处理见 [依赖与运行权限说明](assets/remotion-template/DEPENDENCIES.md)。
 

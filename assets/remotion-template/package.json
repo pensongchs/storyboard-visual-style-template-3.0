@@ -6,7 +6,9 @@
     "studio": "remotion studio",
     "compositions": "remotion compositions src/index.ts",
     "render": "remotion render src/index.ts StoryboardTemplate-Showcase renders/storyboard-template-showcase.mp4 --codec=h264",
-    "still": "remotion still src/index.ts StoryboardTemplate-03 renders/storyboard-template-still.png --frame=100"
+    "still": "remotion still src/index.ts StoryboardTemplate-03 renders/storyboard-template-still.png --frame=100",
+    "render:semantic": "remotion render src/index.ts StoryboardTemplate-SemanticMotion renders/semantic-motion-showcase.mp4 --codec=h264",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@remotion/cli": "4.0.484",

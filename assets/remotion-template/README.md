@@ -1,6 +1,6 @@
 # Remotion 默认母模板
 
-该工程演示“城市居住观察｜纪实编辑感”默认分镜模板。核心源码是 `src/StoryboardTemplateV2.tsx`，包含公共排版常量、基础组件和五段示例 Composition。
+该工程演示“城市居住观察｜纪实编辑感”默认分镜模板。核心源码是 `src/StoryboardTemplateV2.tsx`，包含公共排版常量、基础组件和五段排版示例 Composition。`src/SemanticMotion.tsx` 是四种可复用的语义动效，`src/SemanticMotionShowcase.tsx` 演示逐项聚焦、费用分层、双数字关系和风险反转。
 
 示例图片位于 `public/sample-assets/`，只用于验证模板可以运行。正式制作必须替换为与当期台词一致、来源清楚且可用的高清素材。
 
@@ -22,5 +22,7 @@ npm run render
 
 可识别的 Composition：
 
+- `StoryboardTemplate-SemanticMotion`（`npm run render:semantic` 输出四段语义动效）
+- `Semantic-Selection`、`Semantic-Cost`、`Semantic-Number`、`Semantic-Risk`
 - `StoryboardTemplate-Showcase`
 - `StoryboardTemplate-01` 至 `StoryboardTemplate-05`

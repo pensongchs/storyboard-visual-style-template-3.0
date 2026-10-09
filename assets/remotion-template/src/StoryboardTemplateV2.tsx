@@ -70,8 +70,10 @@ const fadeWindow = (frame: number, start: number, end: number, fade = 14) => {
   return Math.min(entrance, exit);
 };
 
-const exitOpacity = (frame: number, end?: number, fade = 12) => end === undefined
+const exitOpacity = (frame: number, end?: number, fade = 12, compositionEnd?: number) => end === undefined
   ? 1
+  : compositionEnd !== undefined && end >= compositionEnd
+  ? (frame < end ? 1 : 0)
   : interpolate(frame, [Math.max(0, end - fade), end], [1, 0], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
@@ -194,6 +196,26 @@ export const BackgroundSequence = ({
   );
 };
 
+export type CardMotion = 'rise' | 'slide' | 'reveal' | 'focus' | 'none';
+
+/** 时间门控与动作分开；none 供外层已负责运动的组件使用。 */
+export const cardMotionStyle = (
+  frame: number,
+  start: number,
+  end: number | undefined,
+  motion: CardMotion,
+  duration = 18,
+  compositionEnd?: number,
+): React.CSSProperties => {
+  if (motion === 'none') return {opacity: frame >= start && (end === undefined || frame < end) ? 1 : 0};
+  const p = progress(frame, start, duration);
+  const opacity = p * exitOpacity(frame, end, 12, compositionEnd);
+  if (motion === 'slide') return {opacity, transform: `translateX(${18 * (1 - p)}px)`};
+  if (motion === 'reveal') return {opacity, clipPath: `inset(0 ${(1 - p) * 100}% 0 0 round 26px)`};
+  if (motion === 'focus') return {opacity, transform: `scale(${0.96 + p * 0.04})`, filter: `blur(${(1 - p) * 3}px)`};
+  return {opacity, transform: `translateY(${12 * (1 - p)}px) scale(${0.96 + p * 0.04})`};
+};
+
 export type EnterKind = 'reveal' | 'slide' | 'settle' | 'sweep';
 
 export const MotionGroup = ({
@@ -292,6 +314,7 @@ export const AnimatedPill = ({
   end,
   active,
   tone = 'gold',
+  motion = 'rise',
   style,
 }: {
   label: string;
@@ -299,18 +322,18 @@ export const AnimatedPill = ({
   end?: number;
   active?: boolean;
   tone?: 'gold' | 'green' | 'red' | 'ivory';
+  motion?: CardMotion;
   style?: React.CSSProperties;
 }) => {
   const frame = useCurrentFrame();
-  const p = easeBetween(frame, start, start + 16);
+  const {durationInFrames} = useVideoConfig();
   const color = tone === 'green' ? green : tone === 'red' ? red : tone === 'ivory' ? ivory : goldSoft;
   return (
     <div style={{
       ...largePill,
       color: active ? color : 'rgba(247,241,231,.58)',
       borderColor: active ? `${color}99` : 'rgba(247,241,231,.18)',
-      opacity: p * (active ? 1 : 0.76) * exitOpacity(frame, end),
-      transform: `translateY(${(1 - p) * 22}px) scale(${0.92 + p * 0.08 + (active ? 0.035 : 0)})`,
+      ...cardMotionStyle(frame, start, end, motion, 16, durationInFrames),
       boxShadow: active ? `0 20px 52px rgba(0,0,0,.34), 0 0 28px ${color}33` : largePill.boxShadow,
       ...style,
     }}>
@@ -364,7 +387,7 @@ export const FlowNode = ({label, start, active, style}: {label: React.ReactNode;
       border: `2px solid ${active ? 'rgba(217,170,99,.72)' : 'rgba(247,241,231,.24)'}`,
       boxShadow: active ? '0 24px 62px rgba(0,0,0,.38), 0 0 32px rgba(217,170,99,.20)' : '0 24px 58px rgba(0,0,0,.34)',
       opacity: p,
-      transform: `translateY(${(1 - p) * 26}px) scale(${0.78 + p * 0.22})`,
+      transform: `translateY(${(1 - p) * 10}px) scale(${0.96 + p * 0.04})`,
       ...style,
     }}>
       {label}
@@ -400,9 +423,9 @@ export const DelayedText = ({start, children, style}: {start: number; children: 
   );
 };
 
-export const ChoiceCard = ({label, sub, start, end, active, style}: {label: string; sub: string; start: number; end?: number; active?: boolean; style?: React.CSSProperties}) => {
+export const ChoiceCard = ({label, sub, start, end, active, motion = 'slide', style}: {label: string; sub: string; start: number; end?: number; active?: boolean; motion?: CardMotion; style?: React.CSSProperties}) => {
   const frame = useCurrentFrame();
-  const p = easeBetween(frame, start, start + 18);
+  const {durationInFrames} = useVideoConfig();
   return (
     <div style={{
       position: 'absolute',
@@ -414,8 +437,7 @@ export const ChoiceCard = ({label, sub, start, end, active, style}: {label: stri
       background: active ? 'linear-gradient(135deg, rgba(62,47,29,.92), rgba(16,19,19,.88))' : 'linear-gradient(135deg, rgba(15,19,20,.92), rgba(39,35,31,.78))',
       border: `2px solid ${active ? 'rgba(217,170,99,.68)' : 'rgba(247,241,231,.22)'}`,
       boxShadow: active ? '0 26px 68px rgba(0,0,0,.40), 0 0 34px rgba(217,170,99,.16)' : '0 26px 62px rgba(0,0,0,.36)',
-      opacity: p * exitOpacity(frame, end),
-      transform: `translateX(${(1 - p) * (active ? 44 : -44)}px) scale(${0.94 + p * 0.06})`,
+      ...cardMotionStyle(frame, start, end, motion, 18, durationInFrames),
       ...style,
     }}>
       <div style={{fontSize: 37, color: active ? goldSoft : ivory}}>{label}</div>
@@ -434,6 +456,7 @@ export const InformationCard = ({
   sub,
   tone = 'gold',
   variant = 'dark',
+  motion = 'rise',
   style,
 }: {
   start: number;
@@ -442,10 +465,11 @@ export const InformationCard = ({
   sub?: string;
   tone?: InformationCardTone;
   variant?: InformationCardVariant;
+  motion?: CardMotion;
   style?: React.CSSProperties;
 }) => {
   const frame = useCurrentFrame();
-  const enter = progress(frame, start, 16);
+  const {durationInFrames} = useVideoConfig();
   const color = tone === 'green' ? green : tone === 'red' ? red : tone === 'ivory' ? ivory : goldSoft;
   const pearl = variant === 'pearl';
   const pill = variant === 'pill';
@@ -463,8 +487,7 @@ export const InformationCard = ({
       boxShadow: `0 22px 58px rgba(0,0,0,.36), 0 0 28px ${color}22`,
       backdropFilter: 'blur(14px)',
       color: pearl ? '#24231f' : color,
-      opacity: enter * exitOpacity(frame, end),
-      transform: `translateY(${(1 - enter) * 22}px) scale(${0.94 + enter * 0.06})`,
+      ...cardMotionStyle(frame, start, end, motion, 16, durationInFrames),
       boxSizing: 'border-box',
       ...style,
     }}>
@@ -486,6 +509,7 @@ export const PearlInfoCard = ({
   icon,
   label = '房地产开发观察',
   tone = 'gold',
+  motion = 'rise',
   style,
 }: {
   start: number;
@@ -495,10 +519,11 @@ export const PearlInfoCard = ({
   icon: string;
   label?: string;
   tone?: 'gold' | 'green' | 'red';
+  motion?: CardMotion;
   style?: React.CSSProperties;
 }) => {
   const frame = useCurrentFrame();
-  const enter = progress(frame, start, 20);
+  const {durationInFrames} = useVideoConfig();
   const color = tone === 'green' ? green : tone === 'red' ? red : goldSoft;
   return (
     <div style={{
@@ -511,8 +536,7 @@ export const PearlInfoCard = ({
       background: 'linear-gradient(150deg, rgba(255,253,247,.95), rgba(226,220,207,.88))',
       border: '1px solid rgba(255,255,255,.82)',
       boxShadow: '0 24px 70px rgba(0,0,0,.32), inset 0 1px white',
-      opacity: enter * exitOpacity(frame, end),
-      transform: `translateY(${(1 - enter) * 42}px) scale(${0.93 + enter * 0.07})`,
+      ...cardMotionStyle(frame, start, end, motion, 20, durationInFrames),
       boxSizing: 'border-box',
       ...style,
     }}>
@@ -528,11 +552,9 @@ export const PearlInfoCard = ({
 
 export const TimedStage = ({start, end, children}: {start: number; end: number; children: React.ReactNode}) => {
   const frame = useCurrentFrame();
+  const {durationInFrames} = useVideoConfig();
   const enter = progress(frame, start, 16);
-  const exit = interpolate(frame, [Math.max(start + 20, end - 12), end], [1, 0], {
-    extrapolateLeft: 'clamp',
-    extrapolateRight: 'clamp',
-  });
+  const exit = exitOpacity(frame, end, 12, durationInFrames);
   return (
     <div style={{position: 'absolute', inset: 0, opacity: Math.min(enter, exit), transform: `translateY(${(1 - enter) * 18}px)`}}>
       {children}

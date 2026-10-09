@@ -1,4 +1,4 @@
 interface:
   display_name: "分镜素材画面风格模板3.0"
-  short_description: "房产口播的纪实编辑感默认分镜母模板与本地动效素材库"
-  default_prompt: "使用 $storyboard-visual-style-template-3-0 为这段房产口播设计并制作分镜画面。"
+  short_description: "按台词自动匹配多种语义动效的房产口播分镜模板与素材库"
+  default_prompt: "使用 $storyboard-visual-style-template-3-0 按我提供的文案与字幕时间码制作分镜画面，自动匹配语义动效。"

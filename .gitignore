@@ -6,3 +6,6 @@ renders/
 .remotion/
 .DS_Store
 *.log
+
+# 共享依赖既可能是目录也可能是符号链接。
+node_modules
