@@ -52,14 +52,20 @@
 
 ## 安装 Skill
 
+本仓库只发布一个 Skill：**分镜素材画面风格模板3.0**。唯一标识及安装目录名均为 `storyboard-visual-style-template-3-0`。`assets/` 中的源码、示例和动效库是这个 Skill 的配套资源，不是需要另外安装的版本。
+
 在 Codex 中发送：
 
 ```text
 $skill-installer
-从 https://github.com/pensongchs/storyboard-visual-style-template-3.0 安装此仓库根目录的 Skill。
+只安装 https://github.com/pensongchs/storyboard-visual-style-template-3.0 的 main 分支根目录 Skill。
+安装名称固定为 storyboard-visual-style-template-3-0，只保留一个安装目录、一个 Skill 入口；不要安装作者的其他版本，也不要把示例工程注册成 Skill。
+如果已安装同一来源的 3.0，请更新现有目录，不另建副本；先核对当前用户与项目的 Skill 位置，避免重复安装。
 ```
 
-安装后选择 `storyboard-visual-style-template-3-0`；没有显示时重启 Codex。已安装的学员需要更新原 Skill 目录中的文件，GitHub 更新不会自动替换已下载的旧版本；不要另外安装同名副本。
+使用 `skill-installer` 的 `install-skill-from-github.py` 时，参数明确为 `--repo pensongchs/storyboard-visual-style-template-3.0 --ref main --path . --name storyboard-visual-style-template-3-0`。根目录路径 `.` 必须同时指定 `--name`，不要从仓库名、下载目录或源码文件名推导另一个 Skill 名称。
+
+安装后选择 `storyboard-visual-style-template-3-0`；没有显示时重启 Codex。更新已有安装时复用原目录，并保留用户自行修改的内容。发现同来源的多份安装时，先确认哪个目录在使用，再停用多余入口；不要删除其他 Skill。GitHub 更新不会自动替换已下载的旧文件。
 
 ## 调用并提供本期输入
 

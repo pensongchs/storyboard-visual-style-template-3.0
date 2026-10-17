@@ -7,6 +7,8 @@ description: 制作16:9房产口播分镜、插入画面和动态图文包装，
 
 这是用户当前默认分镜母模板。没有明确要求时，不改成其他视觉路线。
 
+本仓库只有这一个 Skill，安装名称和目录统一为 `storyboard-visual-style-template-3-0`。安装或更新时复用同一目录；`assets/` 下的模板源码、示例工程和动效素材是配套资源，不作为其他版本或独立 Skill 安装。
+
 ## 制作前
 
 1. 完整读取 [references/STORYBOARD_DESIGN.md](references/STORYBOARD_DESIGN.md)。
