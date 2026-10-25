@@ -18,28 +18,6 @@
 
 文字可使用玻璃卡、开放侧栏、括号、线框、纸签、页签或无框下划线。容器与动作分别选择；换颜色、换卡片皮肤不等于换解释结构。选型与接口见 [结构、容器与动作选择](references/LAYOUT_RECIPES.md)。
 
-### 随台词变化的语义动效
-
-![选择聚焦、费用分层、数字关系、风险转折](assets/previews/05_语义动效_四类示例.jpg)
-
-四类示例共用模板的材质、色彩和节奏，分别按时间轴推进不同关系；文字、数字、素材和示例时间仅用于组件演示。正式制作按当期台词重新匹配，不固定套用这四镜。
-
-### 排版与语义卡片基线
-
-![默认模板排版基线](assets/previews/01_默认模板_排版基线.png)
-
-### 总结镜头与结论层级
-
-![默认模板结论层级](assets/previews/02_默认模板_结论层级.png)
-
-### 真实成片：最低价房三次代价
-
-![最低价房真实成片联系表](assets/previews/03_默认模板_真实成片联系表_最低价房.png)
-
-### 真实成片：面积与权属
-
-![面积权属真实成片联系表](assets/previews/04_默认模板_真实成片联系表_面积权属.png)
-
 ## 风格核心
 
 - 实景或写实图片占画面约 60%—75%，先让观众看懂场景，再读结论。
@@ -62,7 +40,7 @@
 - `assets/remotion-template/src/SemanticMotion.tsx`：独立实现的选择聚焦、费用分层、数字关系、风险反转组件。
 - `assets/remotion-template/src/SemanticMotionShowcase.tsx`：四种语义结构的可运行演示。
 - `assets/remotion-template/`：可直接安装依赖并运行的 Remotion 示例工程。
-- `assets/previews/`：默认模板基准图与真实成片联系表。
+- `assets/previews/`：八种解释结构与九种文字容器的最新成片预览。
 - `assets/motion-library/`：23 项动效素材库原始文件、截图和登记说明。
 
 ## 安装 Skill
