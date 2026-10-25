@@ -1,10 +1,22 @@
 # 分镜素材画面风格模板3.0
 
-这是“极限小滕”当前默认分镜母模板的 Codex Skill。调用后自动按字幕语义匹配动效库，统一材质与节奏，同时使用适合台词的不同解释结构。画面采用“真实城市生活视频或写实图片 + 杂志式信息排版”：实景负责可信度，标题、卡片、数字、节点和关系线负责解释口播。
+这是“极限小滕”3.0 教程配套的 Codex Skill。调用后自动按字幕语义匹配动效库，统一材质与节奏，同时使用适合台词的不同解释结构。画面采用“真实城市生活视频或写实图片 + 杂志式信息排版”：实景负责可信度，标题、卡片、数字、节点和关系线负责解释口播。
 
 适用于房产口播插入画面、独立分镜视频和动态图文包装，不用于片头、开场、封面或真人出镜整片。
 
 ## 默认模板预览
+
+### 八种可运行的解释结构
+
+![对照、路径、预算、刻度、证据、分层、分支、批注](assets/previews/06_多结构动效_八类示例.jpg)
+
+对照轴、路径接力、预算累加、大数字刻度、实景证据定位、空间分层、条件分支、结论批注都有独立构图与内部动作。默认 `npm run render` 直接运行这套 40 秒演示；正式制作按台词选用合适结构，不固定轮播八镜。
+
+### 九种文字容器
+
+![深色、珍珠白、胶囊、侧栏、括号、下划线、线框、纸签、页签](assets/previews/07_文字容器_九种形态.jpg)
+
+文字可使用玻璃卡、开放侧栏、括号、线框、纸签、页签或无框下划线。容器与动作分别选择；换颜色、换卡片皮肤不等于换解释结构。选型与接口见 [结构、容器与动作选择](references/LAYOUT_RECIPES.md)。
 
 ### 随台词变化的语义动效
 
@@ -33,7 +45,7 @@
 - 实景或写实图片占画面约 60%—75%，先让观众看懂场景，再读结论。
 - 炭黑、深暖灰、低饱和棕灰为底，暖白为主文字；暖金只用于核心数字、关键词和关系线。
 - 一屏只讲一个主要观点，原则上不超过 3 个主要元素。
-- 按语义选择珍珠白信息卡、深色玻璃卡、风险红卡、暖金结论胶囊、证据图片卡或 A/B 选择卡。
+- 先按台词关系选择构图，再选择文字容器和动作；允许无框数字、开放标注与批注式结论，不固定为同一种横向面板。
 - 所有元素随口播时间码出现；未讲内容不提前出现，结尾不额外加空镜或淡出。
 - 1280×720 基准下保留底部字幕安全区和右侧平台按钮安全区。
 
@@ -42,8 +54,11 @@
 ## 仓库内容
 
 - `SKILL.md`：Codex Skill 主入口。
-- `references/STORYBOARD_DESIGN.md`：当前默认模板的完整规则。
-- `assets/remotion-template/src/StoryboardTemplateV2.tsx`：默认母组件与五段排版示例，基础卡片支持多种入场动作。
+- `references/STORYBOARD_DESIGN.md`：当前模板的完整规则。
+- `references/LAYOUT_RECIPES.md`：结构选型、九种容器、组件接口与时间轴用法。
+- `assets/remotion-template/src/SemanticLayouts.tsx`：八种可复用解释结构。
+- `assets/remotion-template/src/LayoutShowcase.tsx`：八种结构与九种容器的可运行演示。
+- `assets/remotion-template/src/StoryboardTemplateV2.tsx`：默认母组件与五段排版示例，信息卡支持九种容器，基础组件支持七种动作选项。
 - `assets/remotion-template/src/SemanticMotion.tsx`：独立实现的选择聚焦、费用分层、数字关系、风险反转组件。
 - `assets/remotion-template/src/SemanticMotionShowcase.tsx`：四种语义结构的可运行演示。
 - `assets/remotion-template/`：可直接安装依赖并运行的 Remotion 示例工程。
@@ -97,7 +112,7 @@ npm run still
 npm run render
 ```
 
-五段排版示例保存在工作工程的 `renders/storyboard-template-showcase.mp4`。四种语义动效示例可执行 `npm run render:semantic`，输出为 `renders/semantic-motion-showcase.mp4`。二者是组件使用演示，正式制作须替换台词、素材和字幕时间轴。`npm run studio` 仅用于用户明确要求的交互预览，不是渲染前置步骤。
+默认八种结构演示保存在 `renders/storyboard-template-showcase.mp4`（40 秒）；执行 `npm run render:surfaces` 输出 `renders/card-surfaces-showcase.mp4`（15 秒）。四种局部语义动效仍可执行 `npm run render:semantic`；五段排版示例保留 Composition `StoryboardTemplate-Showcase`。所有演示均无配音，共用仓库样图；预算与通勤数字在画面中标明为演示值，不能作为真实数据使用。正式制作须替换台词、素材、来源和字幕时间轴。`npm run studio` 仅用于用户明确要求的交互预览，不是渲染前置步骤。
 
 如果 Chromium 被 Codex 沙箱明确阻止，Codex 应通过执行工具申请仅对所需命令授权，在原工作目录重跑并继续完成交付。浏览器下载、目录写入和启动权限应分别诊断；`browser ensure` 不负责解除沙箱限制。具体处理见 [依赖与运行权限说明](assets/remotion-template/DEPENDENCIES.md)。
 

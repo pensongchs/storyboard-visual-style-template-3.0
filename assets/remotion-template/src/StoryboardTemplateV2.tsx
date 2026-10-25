@@ -196,7 +196,7 @@ export const BackgroundSequence = ({
   );
 };
 
-export type CardMotion = 'rise' | 'slide' | 'reveal' | 'focus' | 'none';
+export type CardMotion = 'rise' | 'slide' | 'reveal' | 'focus' | 'wipe-down' | 'stamp' | 'none';
 
 /** 时间门控与动作分开；none 供外层已负责运动的组件使用。 */
 export const cardMotionStyle = (
@@ -211,8 +211,10 @@ export const cardMotionStyle = (
   const p = progress(frame, start, duration);
   const opacity = p * exitOpacity(frame, end, 12, compositionEnd);
   if (motion === 'slide') return {opacity, transform: `translateX(${18 * (1 - p)}px)`};
-  if (motion === 'reveal') return {opacity, clipPath: `inset(0 ${(1 - p) * 100}% 0 0 round 26px)`};
+  if (motion === 'reveal') return {opacity, clipPath: `inset(0 ${(1 - p) * 100}% 0 0)`};
   if (motion === 'focus') return {opacity, transform: `scale(${0.96 + p * 0.04})`, filter: `blur(${(1 - p) * 3}px)`};
+  if (motion === 'wipe-down') return {opacity, clipPath: `inset(0 0 ${(1 - p) * 100}% 0)`};
+  if (motion === 'stamp') return {opacity, transform: `scale(${1.04 - p * 0.04}) rotate(${-2 * (1 - p)}deg)`, transformOrigin: 'center'};
   return {opacity, transform: `translateY(${12 * (1 - p)}px) scale(${0.96 + p * 0.04})`};
 };
 
@@ -447,7 +449,18 @@ export const ChoiceCard = ({label, sub, start, end, active, motion = 'slide', st
 };
 
 export type InformationCardTone = 'gold' | 'green' | 'red' | 'ivory';
-export type InformationCardVariant = 'dark' | 'pearl' | 'pill';
+export type InformationCardVariant = 'dark' | 'pearl' | 'pill' | 'rail' | 'bracket' | 'outline' | 'underline' | 'paper' | 'tab';
+
+/** 容器轮廓独立于入场动作；开放边界给实景留出呼吸空间。 */
+const informationSurface = (variant: InformationCardVariant, color: string): React.CSSProperties => {
+  if (variant === 'rail') return {border: 0, borderLeft: `4px solid ${color}`, borderRadius: 0, background: 'linear-gradient(90deg, rgba(12,16,18,.82), transparent)', boxShadow: 'none', backdropFilter: 'none'};
+  if (variant === 'bracket') return {border: 0, borderLeft: `2px solid ${color}`, borderRight: `2px solid ${color}`, borderRadius: 0, background: 'rgba(12,16,18,.28)', boxShadow: 'none', backdropFilter: 'none'};
+  if (variant === 'outline') return {border: `1px solid ${color}`, borderRadius: 8, background: 'rgba(12,16,18,.32)', boxShadow: 'none', backdropFilter: 'none'};
+  if (variant === 'underline') return {border: 0, borderBottom: `3px solid ${color}`, borderRadius: 0, background: 'transparent', padding: '18px 0 20px', boxShadow: 'none', backdropFilter: 'none'};
+  if (variant === 'paper') return {border: 0, borderTop: `4px solid ${color}`, borderRadius: 2, background: 'linear-gradient(110deg, #f7f1e7, #ddd5c6)', boxShadow: '0 12px 28px rgba(0,0,0,.22)'};
+  if (variant === 'tab') return {border: 0, borderRadius: '0 22px 22px 0', borderLeft: `8px solid ${color}`, background: 'rgba(12,16,18,.82)', boxShadow: '0 12px 28px rgba(0,0,0,.22)'};
+  return {};
+};
 
 export const InformationCard = ({
   start,
@@ -471,13 +484,13 @@ export const InformationCard = ({
   const frame = useCurrentFrame();
   const {durationInFrames} = useVideoConfig();
   const color = tone === 'green' ? green : tone === 'red' ? red : tone === 'ivory' ? ivory : goldSoft;
-  const pearl = variant === 'pearl';
+  const pearl = variant === 'pearl' || variant === 'paper';
   const pill = variant === 'pill';
   return (
     <div style={{
       position: 'absolute',
       minWidth: pill ? 190 : 280,
-      minHeight: pill ? 72 : 126,
+      minHeight: pill ? 72 : variant === 'underline' ? undefined : 126,
       padding: pill ? '17px 26px 19px' : '23px 28px 25px',
       borderRadius: pill ? 999 : 26,
       background: pearl
@@ -487,6 +500,7 @@ export const InformationCard = ({
       boxShadow: `0 22px 58px rgba(0,0,0,.36), 0 0 28px ${color}22`,
       backdropFilter: 'blur(14px)',
       color: pearl ? '#24231f' : color,
+      ...informationSurface(variant, color),
       ...cardMotionStyle(frame, start, end, motion, 16, durationInFrames),
       boxSizing: 'border-box',
       ...style,

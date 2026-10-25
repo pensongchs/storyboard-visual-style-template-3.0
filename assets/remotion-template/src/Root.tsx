@@ -1,4 +1,5 @@
 import {Composition} from 'remotion';
+import {LayoutShowcase, layoutScenes, SurfaceScene, SurfaceShowcase, surfaceGroups} from './LayoutShowcase';
 import {SemanticMotionShowcase, SemanticSelectionScene, SemanticCostScene, SemanticNumberScene, SemanticRiskScene} from './SemanticMotionShowcase';
 import {
   StoryboardTemplateV2Scene1,
@@ -13,6 +14,10 @@ import {
 
 export const Root = () => (
   <>
+    <Composition id="StoryboardTemplate-Layouts" component={LayoutShowcase} durationInFrames={1200} fps={30} width={1280} height={720} />
+    {layoutScenes.map(({id, component}) => <Composition key={id} id={id} component={component} durationInFrames={150} fps={30} width={1280} height={720} />)}
+    <Composition id="StoryboardTemplate-Surfaces" component={SurfaceShowcase} durationInFrames={450} fps={30} width={1280} height={720} />
+    {surfaceGroups.map((_, group) => <Composition key={group} id={`Surface-${group + 1}`} component={SurfaceScene} defaultProps={{group}} durationInFrames={150} fps={30} width={1280} height={720} />)}
     <Composition id="StoryboardTemplate-SemanticMotion" component={SemanticMotionShowcase} durationInFrames={600} fps={30} width={1280} height={720} />
     <Composition id="Semantic-Selection" component={SemanticSelectionScene} durationInFrames={150} fps={30} width={1280} height={720} />
     <Composition id="Semantic-Cost" component={SemanticCostScene} durationInFrames={150} fps={30} width={1280} height={720} />

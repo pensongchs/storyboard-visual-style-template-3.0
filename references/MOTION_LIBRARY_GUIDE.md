@@ -38,6 +38,8 @@
 
 ## 可直接运行的语义组件
 
+先读 [LAYOUT_RECIPES.md](LAYOUT_RECIPES.md) 选择结构。`SemanticLayouts.tsx` 提供八种完整结构，适合需要明显改变构图的镜头；下列四种组件适合局部状态推进。二者均为独立实现，可直接组合母模板使用，无需复制第三方网页代码。
+
 原始素材库包含网页交互代码，不是已经接好的 Remotion 组件。无需将 23 项全部接入；按台词选择候选，再改成时间轴状态。下列组件由本仓库独立实现，不复制授权待确认的第三方源码：
 
 | 台词关系 | 库内候选 | Remotion 入口 | 动态重点 |
@@ -53,7 +55,7 @@
 
 最后一个状态与当前 Composition 同时结束时，基础卡片和 `TimedStage` 保持正常亮度至末帧，不提前淡出。
 
-基础 `InformationCard`、`PearlInfoCard`、`AnimatedPill`、`ChoiceCard` 均支持 `motion="rise|slide|reveal|focus|none"`。动作与语义结构分别选；不同编号最后都变成同一文本框淡入，不能算完成匹配。
+基础 `InformationCard`、`PearlInfoCard`、`AnimatedPill`、`ChoiceCard` 均支持 `motion="rise|slide|reveal|focus|wipe-down|stamp|none"`。动作与语义结构分别选；不同编号最后都变成同一文本框淡入，不能算完成匹配。
 
 ```tsx
 <FocusSelector
